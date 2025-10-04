@@ -1,0 +1,36 @@
+[
+  {
+    "id": "1",
+    "title": "سرير خشب طبيعي مع تخزين",
+    "price": 2500,
+    "oldPrice": 3000,
+    "description": "سرير خشبي أنيق مصنوع من خشب طبيعي عالي الجودة مع وحدة تخزين سفلية.",
+    "material": "خشب طبيعي + MDF",
+    "color": "بني غامق",
+    "size": "200x160 سم",
+    "rating": 4.6,
+    "reviews": 180,
+    "shipping": "يصل خلال 7 أيام - شحن مجاني",
+    "returnPolicy": "إرجاع مجاني خلال 14 يوم",
+    "warranty": "ضمان سنتين على الخشب والتجميع",
+    "colors": [
+      "#8B4513",
+      "#444",
+      "#D2B48C"
+    ],
+    "images": [
+      "/images/bed_real.jpg",
+      "/images/bed_real_side.jpg",
+      "/images/bed_real_size.jpg"
+    ]
+  },
+  {
+    "id": "1758921576547",
+    "title": "",
+    "price": "",
+    "oldPrice": "",
+    "description": "",
+    "shipping": "",
+    "warranty": ""
+  }
+]

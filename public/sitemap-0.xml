@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>http://localhost:3000</loc><lastmod>2025-10-01T07:00:50.674Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/AuthPage</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/admin/dashboard</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/admin/login</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/admin/products</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/admin/orders</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/admin/products</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/ai</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/buy</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/carpenters</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/cart</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/checkout</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/factories</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/hire</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/login</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/orders</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/profile</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/register</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/request/carpenters</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/request/factories</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/requests</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/app/requests/new</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/how-it-works</loc><lastmod>2025-10-01T07:00:50.676Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+</urlset>
