@@ -1,7 +1,8 @@
-import dbConnect from "../../../lib/mongodb";
-import Order from "../../../models/Order";
-import Notification from "../../../models/Notification"; 
-import { sendEmail } from "../../../lib/mailer"; // ✅ جديد: خدمة الإيميل
+// ✅ بدل المسارات الغلط بالمسارات الصحيحة
+import dbConnect from "../../lib/mongodb";
+import Order from "../../models/Order";
+import Notification from "../../models/Notification";
+import sendEmail from "../../lib/mailer";
 
 export default async function handler(req, res) {
   await dbConnect();
