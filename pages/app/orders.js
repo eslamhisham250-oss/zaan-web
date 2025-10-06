@@ -5,6 +5,7 @@ import Layout from "../../components/Layout";
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [emailStatus, setEmailStatus] = useState(null); // ✅ جديد
 
   useEffect(() => {
     async function fetchOrders() {
@@ -16,6 +17,11 @@ export default function OrdersPage() {
           setOrders(data.orders);
         } else {
           setOrders([]);
+        }
+
+        // ✅ لو فيه تأكيد إرسال إيميل من السيرفر
+        if (data.emailSent) {
+          setEmailStatus("✅ تم إرسال رسالة التأكيد إلى بريدك الإلكتروني.");
         }
       } catch (err) {
         console.error("Fetch orders error:", err);
@@ -32,6 +38,13 @@ export default function OrdersPage() {
     <Layout>
       <div style={{ maxWidth: 880, margin: "0 auto", padding: 20 }}>
         <h2>📦 الطلبات</h2>
+
+        {/* ✅ إشعار في حالة الإيميل */}
+        {emailStatus && (
+          <div style={{ background: "#e6ffed", padding: 10, borderRadius: 6, color: "#065f46", marginBottom: 12 }}>
+            {emailStatus}
+          </div>
+        )}
 
         {loading ? (
           <p>⏳ جاري التحميل...</p>

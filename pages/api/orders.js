@@ -1,8 +1,8 @@
-// ✅ بدل المسارات الغلط بالمسارات الصحيحة
-import dbConnect from "../../lib/mongodb";
-import Order from "../../models/Order";
-import Notification from "../../models/Notification";
-import sendEmail from "../../lib/mailer";
+// pages/api/orders/index.js
+import dbConnect from "../../../lib/mongodb";
+import Order from "../../../models/Order";
+import Notification from "../../../models/Notification";
+import sendEmail from "../../../lib/mailer"; // ✅ إرسال الإيميلات
 
 export default async function handler(req, res) {
   await dbConnect();
@@ -21,24 +21,25 @@ export default async function handler(req, res) {
           { "customer.email": new RegExp(q, "i") },
         ];
       }
+
       const orders = await Order.find(filter).sort({ createdAt: -1 }).limit(200);
       return res.status(200).json({ success: true, orders });
     } catch (e) {
+      console.error("❌ Fetch orders error:", e);
       return res.status(500).json({ success: false, message: "Fetch error" });
     }
   }
 
+  // =====================
+  // ✅ تحديث حالة الطلب
+  // =====================
   if (req.method === "PUT") {
     try {
       const { id, status } = req.body;
-      const updated = await Order.findByIdAndUpdate(
-        id,
-        { status },
-        { new: true }
-      );
+      const updated = await Order.findByIdAndUpdate(id, { status }, { new: true });
 
-      // ✅ إشعار للعميل بتغيير حالة الطلب
       if (updated) {
+        // 🔔 إشعار في قاعدة البيانات
         await Notification.create({
           userId: updated.customer?.email || null,
           title: "تحديث حالة الطلب",
@@ -46,32 +47,41 @@ export default async function handler(req, res) {
           type: "order",
         });
 
-        // ✉️ إيميل للعميل بتغيير الحالة
+        // ✉️ إيميل للعميل بتحديث الحالة
         if (updated.customer?.email) {
-          await sendEmail({
-            to: updated.customer.email,
-            subject: "تحديث حالة طلبك",
-            html: `
-              <h2>تم تحديث حالة طلبك</h2>
-              <p>رقم الطلب: <b>${updated._id}</b></p>
-              <p>الحالة الجديدة: <b>${status}</b></p>
-            `,
-          });
+          try {
+            await sendEmail({
+              to: updated.customer.email,
+              subject: "تحديث حالة طلبك",
+              html: `
+                <h2>تم تحديث حالة طلبك</h2>
+                <p>رقم الطلب: <b>${updated._id}</b></p>
+                <p>الحالة الجديدة: <b>${status}</b></p>
+                <p>شكرًا لتعاملك مع <b>ZAAN</b>.</p>
+              `,
+            });
+          } catch (emailError) {
+            console.error("⚠️ فشل إرسال الإيميل للعميل:", emailError);
+          }
         }
       }
 
       return res.status(200).json({ success: true, order: updated });
     } catch (e) {
+      console.error("❌ Update error:", e);
       return res.status(400).json({ success: false, message: "Update error" });
     }
   }
 
+  // =====================
+  // ✅ إنشاء طلب جديد
+  // =====================
   if (req.method === "POST") {
     try {
       const payload = req.body || {};
       const created = await Order.create(payload);
 
-      // ✅ إشعار للعميل
+      // 🔔 إشعار في قاعدة البيانات
       await Notification.create({
         userId: payload.customer?.email || null,
         title: "تم استلام طلبك",
@@ -79,7 +89,7 @@ export default async function handler(req, res) {
         type: "order",
       });
 
-      // ✅ إشعار للأدمن
+      // 🔔 إشعار للأدمن
       await Notification.create({
         userId: "admin",
         title: "طلب جديد",
@@ -87,37 +97,48 @@ export default async function handler(req, res) {
         type: "order",
       });
 
-      // ✉️ إيميل للعميل
+      // ✉️ إيميل للعميل لتأكيد الطلب
       if (payload.customer?.email) {
-        await sendEmail({
-          to: payload.customer.email,
-          subject: "تأكيد طلبك - ZAAN",
-          html: `
-            <h2>شكراً لطلبك من ZAAN</h2>
-            <p>رقم طلبك: <b>${created._id}</b></p>
-            <p>الإجمالي: ${payload.computed?.total || payload.total} ج.م</p>
-            <p>سنقوم بالتواصل معك قريباً.</p>
-          `,
-        });
+        try {
+          await sendEmail({
+            to: payload.customer.email,
+            subject: "✅ تأكيد طلبك - ZAAN",
+            html: `
+              <h2>شكراً لطلبك من <b>ZAAN</b></h2>
+              <p>رقم الطلب: <b>${created._id}</b></p>
+              <p>الإجمالي: <b>${payload.computed?.total || payload.total} ج.م</b></p>
+              <p>سنقوم بالتواصل معك قريباً لتأكيد التفاصيل.</p>
+              <p>📞 في حالة الاستفسار يمكنك التواصل معنا على <b>support@zaan.shop</b></p>
+            `,
+          });
+        } catch (emailError) {
+          console.error("⚠️ فشل إرسال الإيميل للعميل:", emailError);
+        }
       }
 
       // ✉️ إيميل للأدمن
-      await sendEmail({
-        to: "admin@zaan.com", // ✅ غيره لإيميل الأدمن الرسمي
-        subject: "طلب جديد على ZAAN",
-        html: `
-          <h3>طلب جديد</h3>
-          <p>العميل: ${payload.customer?.name || "عميل مجهول"}</p>
-          <p>رقم الهاتف: ${payload.customer?.phone}</p>
-          <p>الإجمالي: ${payload.computed?.total || payload.total} ج.م</p>
-        `,
-      });
+      try {
+        await sendEmail({
+          to: process.env.ADMIN_EMAIL || "zaan.shop.2026@gmail.com",
+          subject: "📩 طلب جديد على ZAAN",
+          html: `
+            <h3>طلب جديد من ${payload.customer?.name || "عميل مجهول"}</h3>
+            <p>رقم الهاتف: ${payload.customer?.phone}</p>
+            <p>الإجمالي: ${payload.computed?.total || payload.total} ج.م</p>
+            <p>📦 نوع الطلب: ${payload.orderType}</p>
+          `,
+        });
+      } catch (adminError) {
+        console.error("⚠️ فشل إرسال الإيميل للأدمن:", adminError);
+      }
 
-      return res.status(201).json({ success: true, order: created });
+      return res.status(201).json({ success: true, order: created, emailSent: true });
     } catch (e) {
+      console.error("❌ Create order error:", e);
       return res.status(400).json({ success: false, message: "Create error" });
     }
   }
 
+  // أي ميثود غير GET/POST/PUT
   return res.status(405).json({ success: false, message: "Method Not Allowed" });
 }
