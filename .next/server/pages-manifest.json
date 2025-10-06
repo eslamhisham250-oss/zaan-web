@@ -2,6 +2,10 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/404": "pages/404.js",
-  "/": "pages/index.js"
+  "/app/request/carpenters": "pages/app/request/carpenters.js",
+  "/app": "pages/app.js",
+  "/app/buy": "pages/app/buy.js",
+  "/app/request/factories": "pages/app/request/factories.js",
+  "/app/ai": "pages/app/ai.js",
+  "/api/products": "pages/api/products.js"
 }

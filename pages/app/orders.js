@@ -5,8 +5,9 @@ import Layout from "../../components/Layout";
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [emailStatus, setEmailStatus] = useState(null); // ✅ جديد
+  const [emailStatus, setEmailStatus] = useState(null);
 
+  // ✅ تحميل الطلبات من الـ API
   useEffect(() => {
     async function fetchOrders() {
       try {
@@ -19,7 +20,6 @@ export default function OrdersPage() {
           setOrders([]);
         }
 
-        // ✅ لو فيه تأكيد إرسال إيميل من السيرفر
         if (data.emailSent) {
           setEmailStatus("✅ تم إرسال رسالة التأكيد إلى بريدك الإلكتروني.");
         }
@@ -34,14 +34,46 @@ export default function OrdersPage() {
     fetchOrders();
   }, []);
 
+  // ✅ تحديث حالة الطلب
+  const updateOrderStatus = async (id, newStatus) => {
+    try {
+      const res = await fetch("/api/orders", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status: newStatus }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setOrders((prev) =>
+          prev.map((o) => (o._id === id ? { ...o, status: newStatus } : o))
+        );
+        setEmailStatus(`📩 تم إرسال إشعار إلى العميل بحالة "${translateStatus(newStatus)}"`);
+      } else {
+        setEmailStatus("❌ فشل تحديث الحالة.");
+      }
+    } catch (err) {
+      console.error("Update order error:", err);
+      setEmailStatus("❌ خطأ أثناء الاتصال بالخادم.");
+    }
+  };
+
   return (
     <Layout>
       <div style={{ maxWidth: 880, margin: "0 auto", padding: 20 }}>
-        <h2>📦 الطلبات</h2>
+        <h2>📦 إدارة الطلبات</h2>
 
-        {/* ✅ إشعار في حالة الإيميل */}
+        {/* ✅ إشعار */}
         {emailStatus && (
-          <div style={{ background: "#e6ffed", padding: 10, borderRadius: 6, color: "#065f46", marginBottom: 12 }}>
+          <div
+            style={{
+              background: "#e6ffed",
+              padding: 10,
+              borderRadius: 6,
+              color: "#065f46",
+              marginBottom: 12,
+            }}
+          >
             {emailStatus}
           </div>
         )}
@@ -56,7 +88,7 @@ export default function OrdersPage() {
               <div key={o._id} style={card}>
                 <div style={row}>
                   <div style={{ fontWeight: 700, fontSize: 16 }}>
-                    🆔 {o.id || o._id.toString()}
+                    🆔 {o._id}
                   </div>
                   <div style={{ color: "#555" }}>
                     {new Date(o.createdAt).toLocaleString("ar-EG")}
@@ -81,8 +113,30 @@ export default function OrdersPage() {
                 <div style={{ marginTop: 6 }}>
                   <b>الحالة:</b>{" "}
                   <span style={{ color: statusColor(o.status) }}>
-                    {o.status || "قيد المعالجة"}
+                    {translateStatus(o.status) || "قيد المعالجة"}
                   </span>
+                </div>
+
+                {/* ✅ أزرار تغيير الحالة */}
+                <div style={{ marginTop: 8 }}>
+                  <button
+                    onClick={() => updateOrderStatus(o._id, "processing")}
+                    style={btn("orange")}
+                  >
+                    ⏳ قيد التنفيذ
+                  </button>
+                  <button
+                    onClick={() => updateOrderStatus(o._id, "completed")}
+                    style={btn("green")}
+                  >
+                    ✅ تم الإنجاز
+                  </button>
+                  <button
+                    onClick={() => updateOrderStatus(o._id, "cancelled")}
+                    style={btn("red")}
+                  >
+                    ❌ تم الإلغاء
+                  </button>
                 </div>
 
                 <div style={{ marginTop: 6 }}>
@@ -134,6 +188,16 @@ function statusColor(status) {
   }
 }
 
+function translateStatus(status) {
+  const map = {
+    received: "تم الاستلام",
+    processing: "قيد التنفيذ",
+    completed: "تم الإنجاز",
+    cancelled: "تم الإلغاء",
+  };
+  return map[status] || "قيد المعالجة";
+}
+
 /* ===== Styles ===== */
 const card = {
   background: "#fff",
@@ -148,3 +212,13 @@ const row = {
   justifyContent: "space-between",
   alignItems: "center",
 };
+
+const btn = (color) => ({
+  background: color,
+  color: "#fff",
+  border: "none",
+  marginRight: 6,
+  padding: "6px 10px",
+  borderRadius: 6,
+  cursor: "pointer",
+});
