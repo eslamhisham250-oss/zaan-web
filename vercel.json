@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "next.config.js",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "MONGODB_URI": "mongodb+srv://zaan_user:0120162689@zaan.lzvuma6.mongodb.net/zaan?retryWrites=true&w=majority&appName=zaan",
+    "NEXTAUTH_URL": "https://zaan.shop",
+    "NEXTAUTH_SECRET": "superSecretRandomStringChangeThis",
+    "NEXT_PUBLIC_FIREBASE_API_KEY": "AIzaSyApsgBFwReEX-Go4LJJyR4j3XIaIMPhu4c",
+    "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN": "zaan-ea6d4.firebaseapp.com",
+    "NEXT_PUBLIC_FIREBASE_PROJECT_ID": "zaan-ea6d4",
+    "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET": "zaan-ea6d4.appspot.com",
+    "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "715732093567",
+    "NEXT_PUBLIC_FIREBASE_APP_ID": "1:715732093567:web:314cece05b01c4b9784d4a",
+    "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-Z21Q8NQL9W",
+    "SMTP_HOST": "smtp.gmail.com",
+    "SMTP_PORT": "587",
+    "SMTP_USER": "zaan.shop.2026@gmail.com",
+    "SMTP_PASS": "tzsu lcnr vwzc xany",
+    "ADMIN_EMAIL": "zaan.shop.2026@gmail.com",
+    "EMAIL_FROM": "ZAAN <zaan.shop.2026@gmail.com>"
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
+}

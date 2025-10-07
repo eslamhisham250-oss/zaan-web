@@ -1,5 +1,5 @@
 // pages/api/auth/register.js
-import { prisma } from '../../../lib/prisma';
+import { PrismaClient } from '../../../lib/prisma';
 import bcrypt from 'bcrypt';
 import { z } from 'zod';
 
