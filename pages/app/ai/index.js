@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PrimaryButton from "../../../components/Button";
 
 export default function AIPage() {
   const [tab, setTab] = useState("text2img");
@@ -52,22 +53,18 @@ export default function AIPage() {
 
       {/* Tabs */}
       <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
-        <button
+        <PrimaryButton
           onClick={() => setTab("text2img")}
           style={{
             ...tabBtn,
-            background: tab === "text2img" ? "#0a7" : "#eee",
-            color: tab === "text2img" ? "#fff" : "#333",
           }}
         >
           ✍️ أوصف بالأحرف
-        </button>
+        </PrimaryButton>
         <button
           onClick={() => setTab("img2img")}
           style={{
             ...tabBtn,
-            background: tab === "img2img" ? "#0a7" : "#eee",
-            color: tab === "img2img" ? "#fff" : "#333",
           }}
         >
           🖼️ عندي صورة

@@ -42,7 +42,7 @@ export default function Home() {
   ];
 
   return (
-    <Layout>
+    <div>
       {/* HERO */}
       <section style={heroWrap}>
         <div>
@@ -106,7 +106,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-    </Layout>
+    </div>
   );
 }
 

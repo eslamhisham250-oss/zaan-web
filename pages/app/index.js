@@ -19,7 +19,6 @@ export default function Dashboard(){
 
   return (
     <div style={{display:'flex'}} dir="rtl">
-      <Sidebar />
       <main style={{flex:1, padding:24}}>
         {/* العنوان الجديد: القائمة */}
         <h2>{t('menu_title')}</h2>
