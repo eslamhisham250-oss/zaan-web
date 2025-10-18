@@ -1,38 +1,18 @@
 // components/Layout.js
-import Sidebar from "./Sidebar";
-import Footer from "./Footer";
+import Navbar from "./Navbar";
 import Image from "next/image";
 
 export default function Layout({ children }) {
   return (
-    <div style={{ display: "flex" }} dir="rtl">
-      {/* ✅ Sidebar على اليمين */}
-      <Sidebar />
+    <div dir="rtl">
+      {/* ✅ Navbar في الأعلى وليس على الجانب */}
+      <Navbar />
 
-      {/* ✅ المحتوى */}
-      <main style={{ flex: 1, padding: "24px", position: "relative" }}>
-        {/* ✅ اللوجو أعلى اليمين */}
-        <div
-          style={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-          }}
-        >
-          <Image
-            src="/logo.png"
-            alt="Zaan logo"
-            width={100}   // 👈 حجم أكبر
-            height={100}  // 👈 حجم أكبر
-            priority
-          />
-        </div>
-
-        {/* ✅ المحتوى الأساسي تحت اللوجو */}
-        <div style={{ marginTop: 130 }}>{children}</div>
-
-        {/* ✅ الفوتر */}
-        <Footer />
+      {/* ✅ المحتوى الرئيسي */}
+      <main style={{ padding: "10px", position: "relative" }}>
+        {/* ✅ اللوجو في أعلى اليمين */}
+        {/* ✅ المحتوى الأساسي */}
+        <div style={{ marginTop: 0 }}>{children}</div>
       </main>
     </div>
   );

@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZAAN</title>
+  <style>
+    :root{
+      --white:#ffffff;
+      --beige:#e8e4dc;
+      --copper:#c99274;
+      --gray:#444c48;
+      --black:#2c2e2c;
+
+      --radius:16px;
+      --shadow:0 8px 24px rgba(0,0,0,.08);
+      --shadow-soft:0 6px 18px rgba(0,0,0,.06);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--white);color:var(--black);font-family:system-ui,-apple-system,Segoue UI,Roboto,Ubuntu,"Cairo",Arial}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+
+    /* ===== Header / Navbar ===== */
+    /* Auth buttons */
+.auth{
+  display:flex; align-items:center; gap:10px;
+}
+.auth .btn{
+  padding:9px 12px; border-radius:10px; box-shadow:var(--shadow-soft);
+}
+.auth .btn--login{
+  background:transparent; color:var(--gray); border:1px solid #ddd;
+}
+.auth .btn--signup{
+  background:var(--copper); color:#fff; border:1px solid var(--copper);
+}
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter:saturate(180%) blur(8px);
+      background:rgba(255,255,255,.7);
+      border-bottom:1px solid #eee;
+    }
+    .nav__in{
+      display:flex; align-items:center; gap:16px;
+      padding:12px 20px; max-width:1200px; margin:0 auto;
+    }
+    .menu{ display:flex; align-items:center; gap:12px;
+      flex-wrap:wrap; margin-inline:auto; } 
+
+    .logo{
+      display:flex; align-items:center; gap:10px; margin-inline-end:auto;
+    }
+    .logo img{height: 80px; width:auto}
+    .logo__title{font-weight:800; letter-spacing:.4px}
+
+    .btn{
+      border:1px solid var(--gray); color:var(--white);
+      background:var(--gray); padding:10px 14px; border-radius:10px; cursor:pointer;
+      transition:.2s ease; box-shadow:var(--shadow-soft);
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn--primary{
+      background:var(--copper); border-color:var(--copper);
+    }
+    .btn--ghost{
+      background:transparent; color:var(--gray); border-color:#ddd;
+    }
+    .cart{
+      position:relative; display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px; border:1px solid #ddd; border-radius:10px; background:#fff;
+    }
+    .cart .dot{
+      position:absolute; top:-6px; inset-inline-start:-6px;
+      background:var(--copper); color:#fff; border-radius:999px; padding:2px 7px; font-size:12px;
+      border:2px solid #fff;
+    } 
+
+    /* ===== Sections scaffolding ===== */
+    section{scroll-margin-top:92px}
+    .wrap{max-width:1200px;margin:0 auto;padding:40px 20px}
+    .title{font-size:28px; line-height:1.2; margin:0 0 10px}
+    .subtitle{color:#6b6f6b; margin:0 0 24px}
+
+    /* ===== Hero ===== */
+    .hero{
+      background:linear-gradient(180deg, #f2f1ef, #eae8e4);
+      border-bottom:1px solid #eee;
+    }
+    .hero__in{
+  display:grid; grid-template-columns:1fr; gap:24px; align-items:start;
+}
+
+    .hero__media{
+  aspect-ratio: 21/9;
+  min-height: 420px;
+  background:#d7d4cf url('images/hero.jpg') center/cover no-repeat;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.hero__media-full {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #d7d4cf url('images/hero.jpg') center/cover no-repeat;
+  background-attachment: fixed;
+  z-index: -1;
+}
+
+
+    .hero__cta{display:flex; gap:10px; flex-wrap:wrap}
+    .hero__badge{
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--beige); color:var(--black); border:1px solid #ddd;
+      padding:8px 12px; border-radius:999px; font-weight:700; margin-bottom:8px;
+    }
+    /* Promo horizontal scroller */
+.promo{
+  background: #f7f6f4; border-top:1px solid #eee; border-bottom:1px solid #eee;
+}
+.scroller{
+  display:flex; gap:16px; overflow:auto; padding:18px 0;
+  scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch;
+}
+.scroller__item{
+  flex:0 0 320px; height:200px;
+  border:1px solid #ddd; border-radius:16px; scroll-snap-align:center;
+  background:#ddd center/cover no-repeat;
+  box-shadow:var(--shadow-soft);
+}
+.scroller::-webkit-scrollbar{ display:none; } /* يخفي السحب */
+.wrap{max-width:1200px;margin:0 auto;padding:40px 20px;overflow:hidden}
+
+
+    /* ===== Services Overview (5 tiles, 4 + 1 center) ===== */
+    .services{
+      background:#fff;
+    }
+    .grid-tiles{
+      display:grid; gap:16px; grid-template-columns:repeat(4,1fr);
+    }
+    .tile{
+      background:var(--beige);
+      border:1px solid #ddd;
+      border-radius:18px; padding:18px; text-align:center;
+      box-shadow:var(--shadow-soft); transition:.2s ease; cursor:pointer;
+    }
+    .tile:hover{transform:translateY(-3px)}
+    .tile__icon{
+  width:230px; height:230px; margin:0 auto 19px;
+  background:#fff; border:1px solid #ddd; border-radius:22px;
+  display:grid; place-items:center; overflow:hidden;
+}
+.tile{ padding:22px; } /* مساحة أكبر للكارت */
+.tile__title{ font-size:18px; } /* عنوان أوضح */
+
+    .tile__icon img{width:100%; height:100%; object-fit:cover}
+    .tile__title{font-weight:800; margin:6px 0}
+    .tile__desc{font-size:14px; color:#5a605a}
+    @media (max-width: 992px){
+  .tile__icon{ width:150px; height:150px; }
+}
+@media (max-width: 560px){
+  .tile__icon{ width:120px; height:120px; }
+}
+
+    /* The 5th centered tile row */
+    .grid-tiles--center{
+      display:grid; grid-template-columns:1fr; gap:16px; margin-top:16px;
+    }
+    .tile--center{max-width:360px; margin:0 auto}
+
+    /* ===== Product lists (cards) ===== */
+    .row-head{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px;
+    }
+    .see-more{font-weight:700; color:var(--copper)}
+    .cards{
+      display:grid; gap:16px; grid-template-columns:repeat(4,1fr);
+    }
+    .card{
+      border:1px solid #e7e7e7; border-radius:16px; overflow:hidden; background:#fff; box-shadow:var(--shadow-soft);
+    }
+    .card__img{aspect-ratio:4/3; background:#ddd url('images/product-1.jpg') center/cover no-repeat}
+    .card__body{padding:12px}
+    .price{font-weight:800; color:var(--gray)}
+    .card__actions{display:flex; gap:8px; margin-top:10px}
+    .pill{padding:9px 12px; border:1px solid #ddd; border-radius:999px; background:#fff}
+    .pill--buy{border-color:var(--copper); color:#fff; background:var(--copper)}
+
+    /* ===== Split content (Carpenters / Factories / AI) ===== */
+    .split{
+      display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center;
+    }
+    .panel{
+      border:1px solid #e7e7e7; border-radius:16px; padding:18px; background:#fff; box-shadow:var(--shadow-soft);
+    }
+    .panel--img{aspect-ratio:4/3; background:#d7d4cf url('images/carpenters.jpg') center/cover no-repeat; border-radius:16px}
+
+    /* ===== AI tabs ===== */
+    .tabs{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .tab{
+      border:1px solid #ddd; border-radius:999px; padding:10px 14px; background:#fff; cursor:pointer;
+    }
+    .tab--active{border-color:var(--copper); background:var(--beige); font-weight:800}
+    .video{
+      background:#000 url('images/ai-video-cover.jpg') center/cover no-repeat; aspect-ratio: 16/9; border-radius:16px;
+      position:relative; overflow:hidden;
+    }
+    .panel--designer{
+  aspect-ratio: 4/3; min-height:420px; 
+  background:#d7d4cf url('images/designer.jpg') center/cover no-repeat; 
+  border-radius:16px;
+}
+
+
+    /* ===== About + Social ===== */
+    .about{background:var(--beige)}
+
+    .social{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:10px
+    }
+    .social a{border:1px solid #ddd; padding:10px 12px; border-radius:999px; background:#fff}
+
+    /* ===== Footer ===== */
+    .footer{
+      background:var(--black); color:#d7d7d7
+    }
+    .footer__in{display:grid; gap:16px; grid-template-columns:1fr auto; align-items:center}
+    .footer .logo__title{color:#fff}
+
+    /* ===== Utilities ===== */
+    .muted{color:#6b6f6b}
+    .lead{font-size:18px; color:#5a605a}
+    .mt-6{margin-top:24px} .mt-8{margin-top:32px}
+    .center{text-align:center}
+
+    /* ===== Animations on reveal ===== */
+    .reveal{opacity:0; transform:translateY(16px); transition:.6s ease}
+    .reveal.show{opacity:1; transform:none}
+
+    /* ===== Responsive ===== */
+    @media (max-width: 992px){
+      .hero__in{grid-template-columns:1fr}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .grid-tiles{grid-template-columns:repeat(2,1fr)}
+      .split{grid-template-columns:1fr}
+    }
+    @media (max-width: 560px){
+      .cards{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Navbar ===== -->
+ <section>
+  <div class="nav__in">
+    <!-- يمين: اللوجو -->
+    <a href="#home" class="logo">
+      <img src="images/logo.png" alt="ZAAN logo" />
+      <div class="logo__title">ZAAN</div>
+    </a>
+   <!-- شمال: دخول / حساب جديد -->
+    <div class="auth">
+      <a href="#login" class="btn btn--login">تسجيل الدخول</a>
+      <a href="#signup" class="btn btn--signup">مستخدم جديد</a>
+    </div>
+  </div>
+</section>
+
+    <!-- منتصف: الروابط + احجز الآن + العربة -->
+    <nav class="menu" aria-label="Main">
+        <li><a class="btn btn--ghost" href="#services">الخدمات</a></li>
+     <li> <a class="btn btn--ghost" href="#furniture">الأثاث</a></li>
+      <a class="btn btn--ghost" href="#carpenters">النجارين</a>
+      <a class="btn btn--ghost" href="#factories">المصانع</a>
+      <a class="btn btn--ghost" href="#ai">الذكاء الصناعي</a>
+      <a class="btn btn--ghost" href="#about">عنّا</a>
+
+      <a class="btn btn--primary" href="#booking">احجز الآن</a>
+      <a class="cart" href="#cart">
+        <span>العربة</span>
+        <span class="dot" id="cartCount">2</span>
+      </a>
+    </ul>
+    </nav>
+
+  <!-- ===== Hero ===== -->
+  <section id="home" class="hero">
+    <div class="wrap hero__in">
+      <div class="reveal">
+        <span class="hero__badge">تصميمات داخلية • تصنيع • توريد</span>
+        <h1 class="title">مساحتك… ذوقك • <span style="color:var(--copper)">ZAAN</span></h1>
+        <p class="lead">
+          حلول أثاث متكاملة: جاهز، مُصنّع حسب الطلب، مصانع، ومساعد تصميم بالذكاء الصناعي.
+        </p>
+        <div class="hero__cta mt-6">
+          <a class="btn btn--primary" href="#services">ابدأ الآن</a>
+          <a class="btn" href="#furniture" style="background:var(--gray)">تصفح الأثاث</a>
+          <a class="btn btn--ghost" href="#ai">جرّب الذكاء الصناعي</a>
+        </div>
+      </div>
+      <div class="hero__media reveal"></div>
+    </div>
+  </section>
+<!-- ===== Promo Strip (بين الهيرو والخدمات) ===== -->
+<section class="promo">
+  <div class="wrap">
+    <div class="scroller">
+      <div class="scroller__item" style="background-image:url('images/promo-1.jpg')"></div>
+      <div class="scroller__item" style="background-image:url('images/promo-2.jpg')"></div>
+      <div class="scroller__item" style="background-image:url('images/promo-3.jpg')"></div>
+      <div class="scroller__item" style="background-image:url('images/promo-4.jpg')"></div>
+      <div class="scroller__item" style="background-image:url('images/promo-5.jpg')"></div>
+    </div>
+  </div>
+</section>
+
+  <!-- ===== Services Overview ===== -->
+  <section id="services" class="services">
+    <div class="wrap">
+      <h2 class="title reveal">الخدمات</h2>
+      <p class="subtitle reveal">اختَر الخدمة المناسبة لاحتياجك</p>
+
+      <div class="grid-tiles">
+        <a class="tile reveal" href="#furniture">
+          <div class="tile__icon"><img src="images/svc-furniture.jpg" alt=""></div>
+          <div class="tile__title">الأثاث</div>
+          <div class="tile__desc">منتجات جاهزة وجديدة</div>
+        </a>
+
+        <a class="tile reveal" href="#carpenters">
+          <div class="tile__icon"><img src="images/svc-carpenter.jpg" alt=""></div>
+          <div class="tile__title">طلب من نجار</div>
+          <div class="tile__desc">تفصيل حسب المقاس</div>
+        </a>
+
+        <a class="tile reveal" href="#factories">
+          <div class="tile__icon"><img src="images/svc-factory.jpg" alt=""></div>
+          <div class="tile__title">طلب من مصنع</div>
+          <div class="tile__desc">كميات وجودة ثابتة</div>
+        </a>
+
+        <a class="tile reveal" href="#hire">
+          <div class="tile__icon"><img src="images/svc-designer.jpg" alt=""></div>
+          <div class="tile__title">مهندس ديكور</div>
+          <div class="tile__desc">جلسات تصميم وإشراف</div>
+        </a>
+      </div>
+
+      <div class="grid-tiles--center">
+        <a class="tile tile--center reveal" href="#ai">
+          <div class="tile__icon"><img src="images/svc-ai.jpg" alt=""></div>
+          <div class="tile__title">الذكاء الصناعي</div>
+          <div class="tile__desc">اقتراحات ديكور فورية</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Furniture ===== -->
+  <section id="furniture">
+    <div class="wrap">
+      <div class="row-head">
+        <div>
+          <h2 class="title reveal">الأثاث</h2>
+          <p class="subtitle reveal">منتجات مختارة بعناية</p>
+        </div>
+        <a href="#furniture-list" class="see-more">شاهد المزيد ↗</a>
+      </div>
+
+      <div class="cards">
+        <!-- كرّر الكارد حسب الحاجة -->
+        <article class="card reveal">
+          <div class="card__img" style="background-image:url('images/product-1.jpg')"></div>
+          <div class="card__body">
+            <div style="font-weight:700">ركنة قماش</div>
+            <div class="price">8,450 ج.م</div>
+            <div class="card__actions">
+              <button class="pill">أضف للعربة</button>
+              <button class="pill pill--buy">اشتري الآن</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__img" style="background-image:url('images/product-2.jpg')"></div>
+          <div class="card__body">
+            <div style="font-weight:700">ترابيزة قهوة</div>
+            <div class="price">1,250 ج.م</div>
+            <div class="card__actions">
+              <button class="pill">أضف للعربة</button>
+              <button class="pill pill--buy">اشتري الآن</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__img" style="background-image:url('images/product-3.jpg')"></div>
+          <div class="card__body">
+            <div style="font-weight:700">كرسي صالون</div>
+            <div class="price">2,200 ج.م</div>
+            <div class="card__actions">
+              <button class="pill">أضف للعربة</button>
+              <button class="pill pill--buy">اشتري الآن</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__img" style="background-image:url('images/product-4.jpg')"></div>
+          <div class="card__body">
+            <div style="font-weight:700">مكتبة حائط</div>
+            <div class="price">3,400 ج.م</div>
+            <div class="card__actions">
+              <button class="pill">أضف للعربة</button>
+              <button class="pill pill--buy">اشتري الآن</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== New Collection ===== -->
+  <section id="new">
+    <div class="wrap">
+      <div class="row-head">
+        <div>
+          <h2 class="title reveal">New Collection</h2>
+          <p class="subtitle reveal">أحدث القطع المضافة</p>
+        </div>
+        <a href="#furniture-list" class="see-more">شاهد المزيد ↗</a>
+      </div>
+
+      <div class="cards">
+        <article class="card reveal">
+          <div class="card__img" style="background-image:url('images/new-1.jpg')"></div>
+          <div class="card__body">
+            <div style="font-weight:700">Bed Frame</div>
+            <div class="price">6,900 ج.م</div>
+            <div class="card__actions">
+              <button class="pill">أضف للعربة</button>
+              <button class="pill pill--buy">اشتري الآن</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__img" style="background-image:url('images/new-2.jpg')"></div>
+          <div class="card__body">
+            <div style="font-weight:700">TV Unit</div>
+            <div class="price">4,250 ج.م</div>
+            <div class="card__actions">
+              <button class="pill">أضف للعربة</button>
+              <button class="pill pill--buy">اشتري الآن</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__img" style="background-image:url('images/new-3.jpg')"></div>
+          <div class="card__body">
+            <div style="font-weight:700">Dining Set</div>
+            <div class="price">9,300 ج.م</div>
+            <div class="card__actions">
+              <button class="pill">أضف للعربة</button>
+              <button class="pill pill--buy">اشتري الآن</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__img" style="background-image:url('images/new-4.jpg')"></div>
+          <div class="card__body">
+            <div style="font-weight:700">Sideboard</div>
+            <div class="price">3,950 ج.م</div>
+            <div class="card__actions">
+              <button class="pill">أضف للعربة</button>
+              <button class="pill pill--buy">اشتري الآن</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="center mt-8">
+        <a class="btn btn--primary" href="#furniture">تسوّق الآن</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Carpenters ===== -->
+  <section id="carpenters">
+    <div class="wrap split">
+      <div class="panel panel--img reveal" style="background-image:url('images/carpenters.jpg')"></div>
+      <div class="panel reveal">
+        <h2 class="title">طلب من نجار</h2>
+        <p class="lead">تفصيل حسب المقاس — جودة عالية ومواعيد تسليم دقيقة.</p>
+        <div class="mt-6">
+          <a class="btn btn--primary" href="#request-carpenter">ابدأ طلب التفصيل</a>
+          <a class="btn btn--ghost" href="#carpenters-gallery">معرض الأعمال</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Factories ===== -->
+  <section id="factories">
+    <div class="wrap split">
+      <div class="panel reveal">
+        <h2 class="title">طلب من مصنع</h2>
+        <p class="lead">كميات كبيرة بأسعار تنافسية — مواصفات ثابتة واعتمادية.</p>
+        <div class="mt-6">
+          <a class="btn btn--primary" href="#request-factory">طلب عرض سعر</a>
+          <a class="btn btn--ghost" href="#factory-catalog">كتالوج المنتجات</a>
+        </div>
+      </div>
+      <div class="panel panel--img reveal" style="background-image:url('images/factory.jpg')"></div>
+    </div>
+  </section>
+
+  <!-- ===== AI Designer ===== -->
+  <section id="ai">
+    <div class="wrap split">
+      <div class="video reveal"></div>
+      <div class="panel reveal">
+        <h2 class="title">الذكاء الصناعي للتصميم</h2>
+        <p class="lead">الحصول على اقتراحات ديكور فورية بصور واقعية.</p>
+        <div class="tabs mt-6">
+          <button class="tab tab--active" data-tab="ai-room">صمّم غرفتك</button>
+          <button class="tab" data-tab="ai-ideas">اقتراحات فورية</button>
+        </div>
+        <div class="mt-6" id="tabContent">
+          <p class="muted">ارفع صورة الغرفة أو اختر الأبعاد، وسنقترح لك أكثر من نمط.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- ===== Hire Designer (مهندس الديكور) ===== -->
+<section id="hire">
+  <div class="wrap split">
+    <div class="panel panel--designer"></div>
+    <div class="panel">
+      <h2 class="title">استعن بمهندس ديكور</h2>
+      <p class="lead">جلسة استشارة + خطة تصميم + متابعة التنفيذ، مع تخصيص حسب الميزانية والمساحة.</p>
+      <ul class="muted" style="line-height:1.9">
+        <li>جلسات أونلاين أو في الموقع</li>
+        <li>مخططات ونماذج ثلاثية الأبعاد</li>
+        <li>قائمة خامات وتكلفة تقديرية</li>
+      </ul>
+      <div class="mt-6">
+        <a class="btn btn--primary" href="#booking-designer">احجز استشارة الآن</a>
+        <a class="btn btn--ghost" href="#designer-gallery">شاهد أعمالنا</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- ===== About & Social ===== -->
+  <section id="about" class="about">
+    <div class="wrap">
+      <h2 class="title reveal">عن ZAAN</h2>
+      <p class="lead reveal">
+        نجمع بين التصميم، التصنيع، والتوريد في منصة واحدة—تجربة سلسة من الاختيار حتى الاستلام.
+      </p>
+      <div class="social reveal">
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="LinkedIn">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="wrap footer__in">
+      <div class="logo">
+        <img src="images/logo-white.png" alt="ZAAN" style="height:28px" />
+        <div class="logo__title">ZAAN</div>
+      </div>
+      <div class="muted">© 2025 ZAAN. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth reveal on scroll
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('show'); }
+      })
+    }, {threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+    // Tabs (AI)
+    const tabs = document.querySelectorAll('.tab');
+    const tabContent = document.getElementById('tabContent');
+    tabs.forEach(t=>{
+      t.addEventListener('click', ()=>{
+        tabs.forEach(x=>x.classList.remove('tab--active'));
+        t.classList.add('tab--active');
+        const id = t.dataset.tab;
+        if(id==='ai-room'){
+          tabContent.innerHTML = '<p class="muted">ارفع صورة الغرفة أو أدخل المقاسات، وسنقترح لك مخططات وأنماط.</p>';
+        } else {
+          tabContent.innerHTML = '<p class="muted">اختر نمطًا (مودرن، كلاسيك، إسكندنافي) واحصل على صور مقترحة فوراً.</p>';
+        }
+      })
+    });
+
+    // Dummy cart count (replace later from your cart state)
+    document.getElementById('cartCount').textContent = '2';
+  </script>
+</body>
+</html>
