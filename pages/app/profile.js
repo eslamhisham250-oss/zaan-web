@@ -1,7 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import Sidebar from "../../components/Sidebar";
 import Footer from "../../components/Footer";
 
 export default function Profile(){
@@ -17,7 +16,6 @@ export default function Profile(){
 
   return (
     <div style={{display:'flex'}} dir="rtl">
-      <Sidebar />
       <main style={{flex:1, padding:24}}>
         <h2>حسابي</h2>
         <p>الاسم: {session.user?.name}</p>

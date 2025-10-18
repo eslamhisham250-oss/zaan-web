@@ -2,11 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/app/ai": "pages/app/ai.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/app/factories": "pages/app/factories.js",
-  "/404": "pages/404.js",
   "/": "pages/index.js",
-  "/app/carpenters": "pages/app/carpenters.js",
-  "/app/hire": "pages/app/hire.js"
+  "/404": "pages/404.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
 }

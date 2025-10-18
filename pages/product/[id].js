@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Sidebar from "../../components/Sidebar";
 import Footer from "../../components/Footer";
 import { addToCart } from "../../lib/cart";
 
@@ -34,7 +33,6 @@ export default function ProductDetail() {
 
   return (
     <div style={{ display: "flex" }} dir="rtl">
-      <Sidebar />
       <main style={{ flex: 1, padding: 24 }}>
         <div style={container}>
           {/* الصور */}

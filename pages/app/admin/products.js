@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../../../components/Sidebar";
 import Footer from "../../../components/Footer";
 
 export default function AdminProductsPage() {
@@ -37,7 +36,6 @@ export default function AdminProductsPage() {
 
   return (
     <div style={{ display: "flex" }} dir="rtl">
-      <Sidebar />
       <main style={{ flex: 1, padding: 24 }}>
         <h2>إدارة المنتجات</h2>
 

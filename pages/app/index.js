@@ -1,5 +1,4 @@
 // pages/app/index.js
-import Sidebar from '../../components/Sidebar';
 import Footer from '../../components/Footer';
 import { useI18n } from '../../lib/i18n';
 
